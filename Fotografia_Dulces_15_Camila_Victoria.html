@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería 15 Años - Alfonso Calderón Fotografía</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        turquoise: {
+                            50: '#e6fffa',
+                            100: '#b2f5ea',
+                            200: '#81e6d9',
+                            300: '#4fd1c5',
+                            400: '#38b2ac',
+                            500: '#319795',
+                            600: '#2c7a7b',
+                            700: '#285e61',
+                            800: '#234e52',
+                            900: '#1d4044',
+                            950: '#0f292b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Anti-download & anti-screenshot security classes */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+        /* Subtle watermark overlay across images */
+        .watermark-overlay {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.03),
+                rgba(255, 255, 255, 0.03) 100px,
+                transparent 100px,
+                transparent 200px
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+        .watermark-text {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+            letter-spacing: 1px;
+            pointer-events: none;
+            z-index: 11;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #115e59;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2dd4bf;
+            border-radius: 4px;
+        }
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(15, 41, 43, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 212, 191, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-turquoise-800 text-turquoise-50 font-sans min-h-screen no-select relative overflow-x-hidden" oncontextmenu="return false;">
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/584241539345?text=Hola%20Alfonso,%20estoy%20revisando%20la%20galería%20de%2015%20años%20y%20deseo%20más%20información." 
+       target="_blank" 
+       class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 group focus:outline-none"
+       title="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp text-3xl"></i>
+        <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out font-medium text-sm ml-0 group-hover:ml-2">
+            ¡Escríbenos!
+        </span>
+    </a>
+
+    <!-- Floating Cart Trigger Button -->
+    <button onclick="toggleCartModal(true)" 
+            class="fixed bottom-24 right-6 z-40 bg-turquoise-600 hover:bg-turquoise-500 text-white px-5 py-3 rounded-full shadow-2xl flex items-center space-x-3 transition-all duration-300 transform hover:scale-105 border border-turquoise-400 focus:outline-none">
+        <i class="fas fa-shopping-cart text-lg"></i>
+        <span class="font-semibold text-sm">Favoritas</span>
+        <span id="cart-badge" class="bg-amber-400 text-turquoise-950 font-bold text-xs px-2 py-0.5 rounded-full shadow-inner">0</span>
+    </button>
+
+    <!-- Header Section -->
+    <header class="relative bg-gradient-to-b from-turquoise-950 via-turquoise-900 to-turquoise-800 py-12 px-4 shadow-xl border-b border-turquoise-700/50">
+        <div class="max-w-7xl mx-auto text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-turquoise-700/50 text-turquoise-200 text-xs font-semibold tracking-widest uppercase mb-3 border border-turquoise-500/30">
+                Sesión Fotográfica Profesional
+            </span>
+            <h1 class="font-serif text-4xl md:text-6xl font-bold tracking-wide text-white mb-3">
+                Mis 15 Años <span class="text-turquoise-300 font-sans font-light italic">Camila Valeria</span>
+            </h1>
+            <p class="text-turquoise-200 text-sm md:text-base max-w-2xl mx-auto font-light leading-relaxed mb-6">
+                Explora cada instante mágico de esta celebración inolvidable. Selecciona tus fotografías favoritas ($15 c/u) para armar tu paquete personalizado.
+            </p>
+            <div class="flex flex-wrap justify-center items-center gap-4 text-xs md:text-sm text-turquoise-300">
+                <span class="flex items-center"><i class="fas fa-camera-retro mr-2 text-turquoise-400"></i> Fotógrafo: Alfonso Calderón</span>
+                <span class="flex items-center"><i class="fab fa-whatsapp mr-2 text-emerald-400"></i> +58 424-1539345</span>
+                <span class="flex items-center"><i class="fas fa-envelope mr-2 text-turquoise-400"></i> alfonso.a.calderon@gmail.com</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Gallery Container -->
+    <main class="max-w-[1600px] mx-auto px-3 sm:px-6 py-10">
+        <!-- Gallery Controls & Status Bar -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-turquoise-900/60 p-4 rounded-2xl border border-turquoise-700/40 backdrop-blur-sm gap-4">
+            <div class="text-center md:text-left">
+                <h2 class="text-lg font-bold text-white flex items-center justify-center md:justify-start">
+                    <i class="fas fa-images text-turquoise-300 mr-2"></i> Galería de Fotografías
+                </h2>
+                <p class="text-xs text-turquoise-200">Haz clic en cualquier imagen para ampliarla en pantalla completa o selecciona tu favorita.</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs bg-turquoise-800 px-3 py-1.5 rounded-lg border border-turquoise-600 text-turquoise-200">
+                    <i class="fas fa-shield-alt text-emerald-400 mr-1"></i> Contenido Protegido
+                </span>
+                <button onclick="selectAllPhotos()" class="bg-turquoise-700 hover:bg-turquoise-600 text-xs px-3 py-1.5 rounded-lg font-medium transition text-white border border-turquoise-500/50">
+                    Seleccionar Todas
+                </button>
+            </div>
+        </div>
+
+        <!-- 6 Columns Grid Responsive Layout -->
+        <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/95 hidden flex flex-col justify-between p-4 md:p-6 opacity-0 transition-opacity duration-300">
+        <!-- Top bar -->
+        <div class="flex justify-between items-center max-w-7xl mx-auto w-full text-white">
+            <div class="flex items-center space-x-3">
+                <span id="lightbox-counter" class="text-xs md:text-sm font-semibold bg-turquoise-900/80 px-3 py-1 rounded-full border border-turquoise-600">1 / 18</span>
+                <h3 id="lightbox-title" class="font-serif text-base md:text-xl font-medium tracking-wide truncate max-w-xs sm:max-w-md">Título de Foto</h3>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button id="lightbox-fav-btn" onclick="toggleLightboxFavorite()" class="bg-turquoise-600 hover:bg-turquoise-500 text-white px-4 py-2 rounded-full text-xs md:text-sm font-medium transition flex items-center shadow-lg">
+                    <i class="fas fa-heart mr-2"></i> <span id="lightbox-fav-text">Seleccionar</span>
+                </button>
+                <button onclick="closeLightbox()" class="text-turquoise-300 hover:text-white p-2 text-2xl focus:outline-none transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Center Image Viewer with Navigation -->
+        <div class="relative flex-1 flex items-center justify-center overflow-hidden my-4">
+            <!-- Previous Button -->
+            <button onclick="navigateLightbox(-1)" class="absolute left-2 md:left-6 z-20 bg-turquoise-950/70 hover:bg-turquoise-800 text-turquoise-100 p-3 md:p-4 rounded-full text-xl md:text-2xl transition shadow-xl border border-turquoise-600/40 focus:outline-none">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Image Container -->
+            <div class="relative max-h-[75vh] max-w-full flex items-center justify-center p-2">
+                <img id="lightbox-img" src="" alt="Foto Ampliada" class="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl pointer-events-none select-none">
+                <!-- Watermark overlay inside lightbox -->
+                <div class="watermark-overlay rounded-lg"></div>
+                <div class="watermark-text">©15 Años</div>
+            </div>
+
+            <!-- Next Button -->
+            <button onclick="navigateLightbox(1)" class="absolute right-2 md:right-6 z-20 bg-turquoise-950/70 hover:bg-turquoise-800 text-turquoise-100 p-3 md:p-4 rounded-full text-xl md:text-2xl transition shadow-xl border border-turquoise-600/40 focus:outline-none">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Bottom info / price bar -->
+        <div class="text-center text-xs md:text-sm text-turquoise-300 font-light pb-2">
+            Valor fijo por fotografía: <strong class="text-white font-semibold">$15.00 USD</strong> • Usa las flechas del teclado o los botones laterales para navegar.
+        </div>
+    </div>
+
+    <!-- Shopping Cart & Checkout Modal -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border border-turquoise-500/30">
+            <!-- Modal Header -->
+            <div class="bg-turquoise-900 px-6 py-4 flex justify-between items-center border-b border-turquoise-700/60">
+                <h3 class="font-serif text-xl font-bold text-white flex items-center">
+                    <i class="fas fa-shopping-cart text-turquoise-300 mr-2.5"></i> Mis Fotografías Seleccionadas
+                </h3>
+                <button onclick="toggleCartModal(false)" class="text-turquoise-300 hover:text-white text-xl focus:outline-none">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body (Scrollable items + Form) -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-1">
+                <!-- Selected Items List -->
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-semibold text-turquoise-300 uppercase tracking-wider">Fotos en el carrito (<span id="cart-count-label">0</span>)</span>
+                        <button onclick="clearCart()" class="text-xs text-rose-300 hover:text-rose-200 underline">Vaciar selección</button>
+                    </div>
+                    <div id="cart-items-container" class="space-y-2 max-h-48 overflow-y-auto pr-2">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Price Summary Box -->
+                <div class="bg-turquoise-950/80 p-4 rounded-xl border border-turquoise-700/50 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs text-turquoise-300 block">Valor unitario: $15.00 c/u</span>
+                        <span class="text-lg font-bold text-white">Monto Total a Pagar:</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-extrabold text-turquoise-300" id="cart-total-price">$0.00 USD</div>
+                </div>
+
+                <!-- Client Information Form -->
+                <div class="bg-turquoise-950/40 p-5 rounded-xl border border-turquoise-700/40 space-y-4">
+                    <h4 class="text-sm font-semibold text-turquoise-200 flex items-center">
+                        <i class="fas fa-user-circle text-turquoise-400 mr-2"></i> Datos del Cliente para el Pedido
+                    </h4>
+                    <form id="order-form" onsubmit="submitOrder(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-medium text-turquoise-300 mb-1">Nombre Completo *</label>
+                            <input type="text" id="client-name" required placeholder="Ej. María Alejandra Pérez" 
+                                   class="w-full bg-turquoise-900/90 border border-turquoise-700 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-turquoise-400 focus:outline-none focus:border-turquoise-400 transition">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-turquoise-300 mb-1">Número de Teléfono *</label>
+                                <input type="tel" id="client-phone" required placeholder="Ej. +58 412 1234567" 
+                                       class="w-full bg-turquoise-900/90 border border-turquoise-700 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-turquoise-400 focus:outline-none focus:border-turquoise-400 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-turquoise-300 mb-1">Correo Electrónico *</label>
+                                <input type="email" id="client-email" required placeholder="Ej. correo@ejemplo.com" 
+                                       class="w-full bg-turquoise-900/90 border border-turquoise-700 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-turquoise-400 focus:outline-none focus:border-turquoise-400 transition">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full mt-2 bg-gradient-to-r from-turquoise-500 to-turquoise-600 hover:from-turquoise-400 hover:to-turquoise-500 text-turquoise-950 font-bold py-3 px-4 rounded-xl shadow-lg transition transform active:scale-98 flex items-center justify-center space-x-2">
+                            <i class="fas fa-file-download"></i>
+                            <span>Confirmar Pedido y Descargar TXT</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Notification Modal -->
+    <div id="notification-modal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-4 backdrop-blur-sm">
+        <div class="glass-panel max-w-md w-full p-6 rounded-2xl shadow-2xl border border-turquoise-500 text-center space-y-4">
+            <div class="w-16 h-16 bg-turquoise-600/40 text-turquoise-300 rounded-full flex items-center justify-center mx-auto text-3xl border border-turquoise-400 shadow-inner">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 id="notification-title" class="text-xl font-bold font-serif text-white">¡Archivo Descargado con Éxito!</h3>
+            <p id="notification-message" class="text-sm text-turquoise-200 leading-relaxed">
+                Se descargó un archivo en la carpeta descarga. Enviar el archivo al número de WhatsApp +584241539345 o enviar al email alfonso.a.calderon@gmail.com
+            </p>
+            <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                <a id="whatsapp-send-btn" href="#" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                    <i class="fab fa-whatsapp"></i> <span>Enviar por WhatsApp</span>
+                </a>
+                <button onclick="closeNotificationModal()" class="flex-1 bg-turquoise-700 hover:bg-turquoise-600 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Array of 18 stunning professional 15th birthday photo items
+        const photos = [
+            { id: 1, title: "Entrada triunfal", url: "C:\Users\User\Desktop\img\0001.JPG" },
+            { id: 2, title: "Vestido de gala principal", url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1000&q=80" },
+            { id: 3, title: "Sesión en los jardines", url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80" },
+            { id: 4, title: "Brindis con familiares", url: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1000&q=80" },
+            { id: 5, title: "Baile de vals con papá", url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=80" },
+            { id: 6, title: "Retrato en primer plano", url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80" },
+            { id: 7, title: "Corte de pastel", url: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=80" },
+            { id: 8, title: "Sorpresa de las amigas", url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80" },
+            { id: 9, title: "Detalle de zapatos y tiara", url: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1000&q=80" },
+            { id: 10, title: "Sesión de luces y destellos", url: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=80" },
+            { id: 11, title: "Alegría en la pista de baile", url: "https://images.unsplash.com/photo-1545128485-c400e7702796?auto=format&fit=crop&w=1000&q=80" },
+            { id: 12, title: "Abrazo emotivo con mamá", url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80" },
+            { id: 13, title: "Fotografía artística en escalera", url: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=1000&q=80" },
+            { id: 14, title: "Sonrisa radiante", url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=80" },
+            { id: 15, title: "El vals principal completo", url: "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80" },
+            { id: 16, title: "Sesión al atardecer", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1000&q=80" },
+            { id: 17, title: "Diversión con cotillón", url: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80" },
+            { id: 18, title: "Último recuerdo de la noche", url: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1000&q=80" }
+        ];
+
+        let selectedPhotoIds = new Set();
+        let currentLightboxIndex = 0;
+        const PHOTO_PRICE = 15.00;
+
+        // Initialize gallery rendering on load
+        window.onload = function() {
+            renderGallery();
+            updateCartUI();
+            setupSecurityListeners();
+        };
+
+        // Render 6-column responsive grid
+        function renderGallery() {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+
+            photos.forEach((photo, index) => {
+                const isSelected = selectedPhotoIds.has(photo.id);
+                const card = document.createElement('div');
+                card.className = `group relative bg-turquoise-900 rounded-xl overflow-hidden shadow-lg border transition-all duration-300 hover:shadow-2xl hover:border-turquoise-400 ${isSelected ? 'border-turquoise-400 ring-2 ring-turquoise-400' : 'border-turquoise-700/60'}`;
+                
+                card.innerHTML = `
+                    <div class="relative aspect-square overflow-hidden bg-turquoise-950 cursor-pointer" onclick="openLightbox(${index})">
+                        <img src="${photo.url}" alt="${photo.title}" loading="lazy" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110 pointer-events-none select-none">
+                        <div class="watermark-overlay"></div>
+                        <div class="watermark-text">Alfonso Calderón</div>
+                        <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <span class="bg-turquoise-900/90 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-sm border border-turquoise-500">
+                                <i class="fas fa-expand mr-1"></i> Ampliar
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-turquoise-900/90 flex flex-col justify-between">
+                        <h4 class="text-xs font-semibold text-white truncate mb-2" title="${photo.title}">${photo.id}. ${photo.title}</h4>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-turquoise-300 font-bold">$15.00</span>
+                            <button onclick="event.stopPropagation(); toggleFavorite(${photo.id})" 
+                                    class="px-2.5 py-1 rounded-lg text-xs font-medium transition flex items-center space-x-1 ${isSelected ? 'bg-amber-400 text-turquoise-950 font-bold shadow' : 'bg-turquoise-800 hover:bg-turquoise-700 text-turquoise-200 border border-turquoise-600'}">
+                                <i class="fas ${isSelected ? 'fa-check' : 'fa-heart'}"></i>
+                                <span>${isSelected ? 'Favorita' : 'Elegir'}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Toggle photo selection
+        function toggleFavorite(id) {
+            if (selectedPhotoIds.has(id)) {
+                selectedPhotoIds.delete(id);
+            } else {
+                selectedPhotoIds.add(id);
+            }
+            renderGallery();
+            updateCartUI();
+            if (!document.getElementById('lightbox-modal').classList.contains('hidden')) {
+                updateLightboxFavoriteButton();
+            }
+        }
+
+        // Select all photos
+        function selectAllPhotos() {
+            photos.forEach(p => selectedPhotoIds.add(p.id));
+            renderGallery();
+            updateCartUI();
+            if (!document.getElementById('lightbox-modal').classList.contains('hidden')) {
+                updateLightboxFavoriteButton();
+            }
+        }
+
+        // Clear cart
+        function clearCart() {
+            selectedPhotoIds.clear();
+            renderGallery();
+            updateCartUI();
+            if (!document.getElementById('lightbox-modal').classList.contains('hidden')) {
+                updateLightboxFavoriteButton();
+            }
+        }
+
+        // Update cart UI badge, list, and total
+        function updateCartUI() {
+            const count = selectedPhotoIds.size;
+            document.getElementById('cart-badge').innerText = count;
+            document.getElementById('cart-count-label').innerText = count;
+            
+            const totalPrice = count * PHOTO_PRICE;
+            document.getElementById('cart-total-price').innerText = `$${totalPrice.toFixed(2)} USD`;
+
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+
+            if (count === 0) {
+                container.innerHTML = `<p class="text-xs text-turquoise-400 text-center py-4 italic">No has seleccionado ninguna fotografía aún.</p>`;
+                return;
+            }
+
+            selectedPhotoIds.forEach(id => {
+                const photo = photos.find(p => p.id === id);
+                if (photo) {
+                    const itemRow = document.createElement('div');
+                    itemRow.className = "flex items-center justify-between bg-turquoise-900/60 p-2.5 rounded-xl border border-turquoise-700/50";
+                    itemRow.innerHTML = `
+                        <div class="flex items-center space-x-3 overflow-hidden">
+                            <img src="${photo.url}" class="w-10 h-10 object-cover rounded-lg pointer-events-none select-none">
+                            <div class="truncate">
+                                <p class="text-xs font-semibold text-white truncate">${photo.title}</p>
+                                <p class="text-[10px] text-turquoise-300">Foto #${photo.id} • $15.00</p>
+                            </div>
+                        </div>
+                        <button onclick="toggleFavorite(${photo.id})" class="text-rose-400 hover:text-rose-300 text-xs px-2 py-1">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    `;
+                    container.appendChild(itemRow);
+                }
+            });
+        }
+
+        // Lightbox functions
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            updateLightboxContent();
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIndex = (currentLightboxIndex + direction + photos.length) % photos.length;
+            updateLightboxContent();
+        }
+
+        function updateLightboxContent() {
+            const photo = photos[currentLightboxIndex];
+            document.getElementById('lightbox-img').src = photo.url;
+            document.getElementById('lightbox-title').innerText = `${photo.id}. ${photo.title}`;
+            document.getElementById('lightbox-counter').innerText = `${currentLightboxIndex + 1} / ${photos.length}`;
+            updateLightboxFavoriteButton();
+        }
+
+        function updateLightboxFavoriteButton() {
+            const photo = photos[currentLightboxIndex];
+            const isFav = selectedPhotoIds.has(photo.id);
+            const btn = document.getElementById('lightbox-fav-btn');
+            const txt = document.getElementById('lightbox-fav-text');
+            
+            if (isFav) {
+                btn.className = "bg-amber-400 hover:bg-amber-500 text-turquoise-950 font-bold px-4 py-2 rounded-full text-xs md:text-sm transition flex items-center shadow-lg";
+                txt.innerText = "Seleccionada";
+            } else {
+                btn.className = "bg-turquoise-600 hover:bg-turquoise-500 text-white font-medium px-4 py-2 rounded-full text-xs md:text-sm transition flex items-center shadow-lg";
+                txt.innerText = "Seleccionar";
+            }
+        }
+
+        function toggleLightboxFavorite() {
+            const photo = photos[currentLightboxIndex];
+            toggleFavorite(photo.id);
+        }
+
+        // Cart modal toggling
+        function toggleCartModal(open) {
+            const modal = document.getElementById('cart-modal');
+            if (open) {
+                if (selectedPhotoIds.size === 0) {
+                    showNotification("Aviso", "Por favor selecciona al menos una fotografía favorita antes de abrir el carrito.");
+                    return;
+                }
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // Order submission and TXT generation
+        function submitOrder(e) {
+            e.preventDefault();
+            
+            if (selectedPhotoIds.size === 0) {
+                showNotification("Aviso", "Debe seleccionar al menos una fotografía.");
+                return;
+            }
+
+            const name = document.getElementById('client-name').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
+            const email = document.getElementById('client-email').value.trim();
+
+            let selectedListText = "";
+            let totalAmount = selectedPhotoIds.size * PHOTO_PRICE;
+
+            selectedPhotoIds.forEach(id => {
+                const p = photos.find(item => item.id === id);
+                if (p) {
+                    selectedListText += `- [ID: ${p.id}] ${p.title} ($15.00)\r\n`;
+                }
+            });
+
+            const txtContent = `=========================================\r\n` +
+                               `    RESUMEN DE PEDIDO - FOTOGRAFÍA 15 AÑOS CAMILA VALERIA\r\n` +
+                               `    Fotógrafo: Alfonso Calderón\r\n` +
+                               `=========================================\r\n\r\n` +
+                               `DATOS DEL CLIENTE:\r\n` +
+                               `Nombre Completo: ${name}\r\n` +
+                               `Teléfono: ${phone}\r\n` +
+                               `Correo Electrónico: ${email}\r\n\r\n` +
+                               `FOTOGRAFÍAS SELECCIONADAS (${selectedPhotoIds.size} en total):\r\n` +
+                               selectedListText + `\r\n` +
+                               `VALOR TOTAL A PAGAR: $${totalAmount.toFixed(2)} USD\r\n\r\n` +
+                               `INSTRUCCIONES DE ENVÍO:\r\n` +
+                               `Por favor envíe este archivo descargado al WhatsApp: +584241539345\r\n` +
+                               `o al correo electrónico: alfonso.a.calderon@gmail.com`;
+
+            // Create blob and download link
+            const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Pedido_15anos_${name.replace(/\s+/g, '_')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Close cart modal
+            toggleCartModal(false);
+
+            // Setup WhatsApp message link for quick sending
+            const waText = encodeURIComponent(`Hola Alfonso, soy ${name}. Acabo de generar mi lista de fotos favoritas (${selectedPhotoIds.size} fotos) por un total de $${totalAmount.toFixed(2)} USD. Te adjunto/envío los detalles de mi pedido.`);
+            document.getElementById('whatsapp-send-btn').href = `https://wa.me/584241539345?text=${waText}`;
+
+            // Show success notification modal
+            showNotificationModal();
+        }
+
+        function showNotificationModal() {
+            const modal = document.getElementById('notification-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeNotificationModal() {
+            const modal = document.getElementById('notification-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function showNotification(title, message) {
+            // Reusing notification modal for general alerts or custom simple alert
+            alert(message);
+        }
+
+        function setupSecurityListeners() {
+            // Prevent dragging images
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.nodeName === 'IMG') {
+                    e.preventDefault();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
