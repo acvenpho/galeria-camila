@@ -295,27 +295,19 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Array of 18 stunning professional 15th birthday photo items
-        const photos = [
-            { id: 1, title: "Entrada triunfal", url: "C:\Users\User\Desktop\img\0001.JPG" },
-            { id: 2, title: "Vestido de gala principal", url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1000&q=80" },
-            { id: 3, title: "Sesión en los jardines", url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80" },
-            { id: 4, title: "Brindis con familiares", url: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1000&q=80" },
-            { id: 5, title: "Baile de vals con papá", url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1000&q=80" },
-            { id: 6, title: "Retrato en primer plano", url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80" },
-            { id: 7, title: "Corte de pastel", url: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=80" },
-            { id: 8, title: "Sorpresa de las amigas", url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=80" },
-            { id: 9, title: "Detalle de zapatos y tiara", url: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1000&q=80" },
-            { id: 10, title: "Sesión de luces y destellos", url: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=80" },
-            { id: 11, title: "Alegría en la pista de baile", url: "https://images.unsplash.com/photo-1545128485-c400e7702796?auto=format&fit=crop&w=1000&q=80" },
-            { id: 12, title: "Abrazo emotivo con mamá", url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80" },
-            { id: 13, title: "Fotografía artística en escalera", url: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=1000&q=80" },
-            { id: 14, title: "Sonrisa radiante", url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=80" },
-            { id: 15, title: "El vals principal completo", url: "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80" },
-            { id: 16, title: "Sesión al atardecer", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1000&q=80" },
-            { id: 17, title: "Diversión con cotillón", url: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80" },
-            { id: 18, title: "Último recuerdo de la noche", url: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1000&q=80" }
-        ];
+        // Generación automática de las 869 fotografías (desde 0001.JPG hasta 0869.JPG)
+        const photos = [];
+        const totalPhotos = 869;
+
+        for (let i = 1; i <= totalPhotos; i++) {
+            // Formatea el número con ceros a la izquierda (ej: 1 pasa a "0001", 45 a "0045")
+            const paddedId = String(i).padStart(4, '0');
+            photos.push({
+                id: i,
+                title: `Fotografía #${paddedId}`,
+                url: `img/${paddedId}.JPG`
+            });
+        }
 
         let selectedPhotoIds = new Set();
         let currentLightboxIndex = 0;
@@ -328,7 +320,7 @@
             setupSecurityListeners();
         };
 
-        // Render 6-column responsive grid
+        // Render responsive grid
         function renderGallery() {
             const grid = document.getElementById('gallery-grid');
             grid.innerHTML = '';
@@ -350,7 +342,7 @@
                         </div>
                     </div>
                     <div class="p-3 bg-turquoise-900/90 flex flex-col justify-between">
-                        <h4 class="text-xs font-semibold text-white truncate mb-2" title="${photo.title}">${photo.id}. ${photo.title}</h4>
+                        <h4 class="text-xs font-semibold text-white truncate mb-2" title="${photo.title}">Foto ${String(photo.id).padStart(4, '0')}</h4>
                         <div class="flex items-center justify-between">
                             <span class="text-xs text-turquoise-300 font-bold">$15.00</span>
                             <button onclick="event.stopPropagation(); toggleFavorite(${photo.id})" 
@@ -419,14 +411,15 @@
             selectedPhotoIds.forEach(id => {
                 const photo = photos.find(p => p.id === id);
                 if (photo) {
+                    const paddedNum = String(photo.id).padStart(4, '0');
                     const itemRow = document.createElement('div');
                     itemRow.className = "flex items-center justify-between bg-turquoise-900/60 p-2.5 rounded-xl border border-turquoise-700/50";
                     itemRow.innerHTML = `
                         <div class="flex items-center space-x-3 overflow-hidden">
                             <img src="${photo.url}" class="w-10 h-10 object-cover rounded-lg pointer-events-none select-none">
                             <div class="truncate">
-                                <p class="text-xs font-semibold text-white truncate">${photo.title}</p>
-                                <p class="text-[10px] text-turquoise-300">Foto #${photo.id} • $15.00</p>
+                                <p class="text-xs font-semibold text-white truncate">Foto #${paddedNum}</p>
+                                <p class="text-[10px] text-turquoise-300">ID: ${photo.id} • $15.00</p>
                             </div>
                         </div>
                         <button onclick="toggleFavorite(${photo.id})" class="text-rose-400 hover:text-rose-300 text-xs px-2 py-1">
@@ -460,9 +453,10 @@
 
         function updateLightboxContent() {
             const photo = photos[currentLightboxIndex];
+            const paddedNum = String(photo.id).padStart(4, '0');
             document.getElementById('lightbox-img').src = photo.url;
-            document.getElementById('lightbox-title').innerText = `${photo.id}. ${photo.title}`;
-            document.getElementById('lightbox-counter').innerText = `${currentLightboxIndex + 1} / ${photos.length}`;
+            document.getElementById('lightbox-title').innerText = `Fotografía #${paddedNum}`;
+            document.getElementById('lightbox-counter').innerText = `${currentLightboxIndex + 1} /${photos.length}`;
             updateLightboxFavoriteButton();
         }
 
@@ -521,7 +515,8 @@
             selectedPhotoIds.forEach(id => {
                 const p = photos.find(item => item.id === id);
                 if (p) {
-                    selectedListText += `- [ID: ${p.id}] ${p.title} ($15.00)\r\n`;
+                    const paddedNum = String(p.id).padStart(4, '0');
+                    selectedListText += `- [Archivo: ${paddedNum}.JPG] Fotografía #${paddedNum} ($15.00)\r\n`;
                 }
             });
 
@@ -540,7 +535,6 @@
                                `Por favor envíe este archivo descargado al WhatsApp: +584241539345\r\n` +
                                `o al correo electrónico: alfonso.a.calderon@gmail.com`;
 
-            // Create blob and download link
             const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -551,14 +545,11 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            // Close cart modal
             toggleCartModal(false);
 
-            // Setup WhatsApp message link for quick sending
-            const waText = encodeURIComponent(`Hola Alfonso, soy ${name}. Acabo de generar mi lista de fotos favoritas (${selectedPhotoIds.size} fotos) por un total de $${totalAmount.toFixed(2)} USD. Te adjunto/envío los detalles de mi pedido.`);
+            const waText = encodeURIComponent(`Hola Alfonso, soy ${name}. Acabo de generar mi lista de fotos favoritas (${selectedPhotoIds.size} fotos) por un total de$${totalAmount.toFixed(2)} USD. Te adjunto/envío los detalles de mi pedido.`);
             document.getElementById('whatsapp-send-btn').href = `https://wa.me/584241539345?text=${waText}`;
 
-            // Show success notification modal
             showNotificationModal();
         }
 
@@ -575,12 +566,10 @@
         }
 
         function showNotification(title, message) {
-            // Reusing notification modal for general alerts or custom simple alert
             alert(message);
         }
 
         function setupSecurityListeners() {
-            // Prevent dragging images
             document.addEventListener('dragstart', function(e) {
                 if (e.target.nodeName === 'IMG') {
                     e.preventDefault();
